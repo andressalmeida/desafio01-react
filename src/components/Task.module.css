@@ -14,6 +14,7 @@
 .newTaskForm textarea {
     background: var(--gray-500);
     border: 1px solid var(--gray-700);
+    color: var(--gray-100);
     border-radius: 8px;
     resize: none;
     width: 40rem;
@@ -34,9 +35,12 @@
     gap: 0.25rem;
     padding: 0.25rem;
     font-size: 0.875rem;
+    cursor: pointer
 }
 
-
+.newTaskForm button:hover {
+    background: var(--blue);
+}
 
 .emptyTasks {
     margin-top: 1.5rem;
@@ -47,10 +51,12 @@
     gap: 1rem;
     justify-content: center;
     flex-direction: column;
-    align-items: center
+    align-items: center;
 }
 
-
+.emptyTasksFalse {
+    display: none
+}
 .emptyTasks strong {
     color: var(--gray-300);
     font-size: 1rem;
@@ -70,6 +76,7 @@
 }
 
 .listTitle {
+    margin-top: 4rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -119,6 +126,10 @@
     justify-content: center;
     align-items: center;
 }
+.checked {
+    font-style: line-through;
+    color: red
+}
 
 .listTasks ul li {
     display: flex;
@@ -126,9 +137,8 @@
     justify-content: space-between;
     align-items: flex-start;
     padding: 16px;
-    gap: 12px;
     height: 4.5rem;
-
+ 
     background: #262626;
 
     border: 1px solid var(--gray-400);
@@ -141,7 +151,9 @@
     position: relative;
 }
 .checkBoxList span {
-    margin-left: 1rem;
+    margin-left: 1.75rem;
+    text-decoration-line: none;
+    color: var(--gray-300)
 }
 
 .checkBoxList label {
@@ -169,7 +181,7 @@
     left: 0.3rem;
     top: 0.35rem;
 }
-  
+
 .checkBoxList input[type="checkbox"] {
     visibility: hidden;
 }

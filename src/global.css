@@ -25,6 +25,10 @@
     font-family: 'Inter', sans-serif;
     
 }
+:focus{
+    outline: transparent;
+    box-shadow: 0 0 0 2px var(--blue-dark);
+}
 
 body {
     background: var(--gray-600);

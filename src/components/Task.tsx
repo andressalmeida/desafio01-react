@@ -3,22 +3,68 @@ import Clipboard from '../assets/Clipboard.svg'
 import { PlusCircle } from 'phosphor-react';
 import { Trash } from 'phosphor-react'
 import { useState } from 'react';
-import { ChangeEvent, FormEvent } from 'react';
+import { ChangeEvent, FormEvent, InvalidEvent } from 'react';
+
+import {v4 as uuidv4} from 'uuid'
+
+
+interface TaskProps {
+    id: string,
+    content: string,
+    isChecked: boolean,
+}
 
 export function Task() {
 
-    const [text, setText] = useState('')
+    const [tasks, setTasks] = useState<TaskProps[]>([])
+
+    const [inputNewText, setInputNewText] = useState('')
+
+    const [taskCount, setTaskCount] = useState(0)
+
+    const isTaskEmpty = tasks.length === 0
 
     function handleCreateTask(event: FormEvent) {
         event.preventDefault()
-        console.log(text)
+
+        if(inputNewText) {
+            const newTask = {
+                id: uuidv4(),
+                content: inputNewText,
+                isChecked: false
+            }
+
+            setTasks([...tasks, newTask])
+            setInputNewText('')
+
+            setTaskCount((state) => {return state + 1})
+        } else {
+            alert('Este campo é obrigatório')
+        }
+        
     }
 
     function handleInputChange(event: ChangeEvent<HTMLTextAreaElement>) {
         event.target.setCustomValidity('')
-        setText(event.target.value)
+        
+        setInputNewText(event.target.value)
     }
 
+    function handleCheckTask(id: string) {
+        const checkedTask = tasks.map(task => task.id === id ? {
+            ...task,
+            isChecked: !task.isChecked
+        } : task)
+
+        setTasks(checkedTask)
+    }
+
+    function handleDeleteTask(id: string) {
+        const filteredTasks = tasks.filter(task => task.id !== id)
+
+        setTasks(filteredTasks)
+        setTaskCount(filteredTasks.length)
+    }
     return (
  
         <div className={styles.taskContainer}>
@@ -27,72 +73,66 @@ export function Task() {
                 <textarea
                     name="newtask"
                     placeholder='Adicione uma nova tarefa'
+                    value={inputNewText}
                     onChange={handleInputChange}
+                    required
                 />
                 <button onClick={handleCreateTask}>Criar 
                     <PlusCircle size={18} /> 
                 </button>
             </form>
 
-            <div className={styles.listTasks}>
-
-                <div className={styles.listTitle}>
+            <div className={styles.listTitle}>
                     <div className={styles.countAllTasks}>
                         <strong>Tarefas criadas</strong>
-                        <span> 0</span>
+                        <span>{taskCount}</span>
                     </div>
                     
                     <div className={styles.countCheckTasks}>
                         <strong>Concluídas</strong>
                         <span>0</span>
                     </div>
-                </div>
+            </div>
 
-                <div className={styles.emptyTasks}>
+            <div className={isTaskEmpty ? styles.emptyTasks : styles.emptyTasksFalse}>
+            
                 <img src={Clipboard} alt="" />
                 <strong>Você ainda não tem tarefas cadastradas</strong>
                 <p>Crie tarefas e organize seus itens a fazer</p>
-                </div>
 
-                <ul>
-                    <li>
-                        <div className={styles.checkBoxList}>
-                            <input type="checkbox" id="checkbox1" />
-                            <label htmlFor="checkbox1"> </label>
-                        </div>
+            </div>
 
-                        <button>
-                            <Trash size={20} />
-                        </button>
-                    </li>
+            <div className={styles.listTasks}>
+                
+                {tasks.map((task, index) => {
+                    if (!isTaskEmpty) {
+                    return ( 
+                        <ul key={task.id}>
+                            <li>
+                                <div className={styles.checkBoxList} >
+                                    <input 
+                                        type="checkbox" 
+                                        id={index.toString()} 
+                                        checked={task.isChecked}
+                                        onChange={() => handleCheckTask(task.id)}
+                                      />
+                                      
+                                    <label htmlFor={index.toString()}>   
+                                    <span>
+                                        {task.content}
+                                    </span>
+                                    </label>
+                                    
+                                </div>
 
-                    <li>
-                        <div className={styles.checkBoxList}>
-                            <input type="checkbox" id="checkbox2" />
-                            <label htmlFor="checkbox2"> </label>
-                        </div>
-
-                        <button>
-                            <Trash size={20} />
-                        </button>
-                    </li>
-
-                    <li>
-                        <div className={styles.checkBoxList}>
-                            <input type="checkbox" id="checkbox3" />
-                            <label htmlFor="checkbox3"> </label>
-                            <span>
-                                lorem ipsum dolor sit amet, consectetur adip
-                            </span>
-                        </div>
-
-                        <button>
-                            <Trash size={20} />
-                        </button>
-                    </li>
-
-                </ul>
-
+                                <button onClick={() => handleDeleteTask(task.id)}>
+                                    <Trash size={20} />
+                                </button>
+                            </li>
+                        </ul>
+                    )}
+           
+                })}
             </div>
         </div>
         
