@@ -126,14 +126,9 @@
     justify-content: center;
     align-items: center;
 }
-.checked {
-    font-style: line-through;
-    color: red
-}
 
 .listTasks ul li {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
     padding: 16px;
@@ -150,10 +145,17 @@
 .checkBoxList {
     position: relative;
 }
-.checkBoxList span {
-    margin-left: 1.75rem;
+
+.notChecked {
+    margin-left: 1rem;
     text-decoration-line: none;
     color: var(--gray-300)
+}
+
+.checked {
+    margin-left: 1rem;
+    color: var(--gray-300);
+    text-decoration: line-through
 }
 
 .checkBoxList label {

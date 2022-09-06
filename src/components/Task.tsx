@@ -2,7 +2,7 @@ import styles from './Task.module.css';
 import Clipboard from '../assets/Clipboard.svg'
 import { PlusCircle } from 'phosphor-react';
 import { Trash } from 'phosphor-react'
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { ChangeEvent, FormEvent, InvalidEvent } from 'react';
 
 import {v4 as uuidv4} from 'uuid'
@@ -17,11 +17,8 @@ interface TaskProps {
 export function Task() {
 
     const [tasks, setTasks] = useState<TaskProps[]>([])
-
     const [inputNewText, setInputNewText] = useState('')
-
     const [taskCount, setTaskCount] = useState(0)
-
     const isTaskEmpty = tasks.length === 0
 
     function handleCreateTask(event: FormEvent) {
@@ -53,11 +50,16 @@ export function Task() {
     function handleCheckTask(id: string) {
         const checkedTask = tasks.map(task => task.id === id ? {
             ...task,
-            isChecked: !task.isChecked
+            isChecked: !task.isChecked,
         } : task)
 
-        setTasks(checkedTask)
+        setTasks(checkedTask) 
     }
+
+    const filteredCheckedTasks = useMemo(() => {
+        return tasks.filter(task => task.isChecked === true).length
+    }, [tasks])
+    
 
     function handleDeleteTask(id: string) {
         const filteredTasks = tasks.filter(task => task.id !== id)
@@ -90,7 +92,7 @@ export function Task() {
                     
                     <div className={styles.countCheckTasks}>
                         <strong>Concluídas</strong>
-                        <span>0</span>
+                        <span>{filteredCheckedTasks}</span>
                     </div>
             </div>
 
@@ -104,7 +106,7 @@ export function Task() {
 
             <div className={styles.listTasks}>
                 
-                {tasks.map((task, index) => {
+                {tasks.map((task) => {
                     if (!isTaskEmpty) {
                     return ( 
                         <ul key={task.id}>
@@ -112,17 +114,18 @@ export function Task() {
                                 <div className={styles.checkBoxList} >
                                     <input 
                                         type="checkbox" 
-                                        id={index.toString()} 
+                                        id={task.id} 
                                         checked={task.isChecked}
                                         onChange={() => handleCheckTask(task.id)}
                                       />
                                       
-                                    <label htmlFor={index.toString()}>   
-                                    <span>
+                                    <label htmlFor={task.id}>   
+                                   </label>
+
+                                   <span className={task.isChecked === true ? styles.checked : styles.notChecked}>
                                         {task.content}
                                     </span>
-                                    </label>
-                                    
+                                   
                                 </div>
 
                                 <button onClick={() => handleDeleteTask(task.id)}>
@@ -134,8 +137,6 @@ export function Task() {
            
                 })}
             </div>
-        </div>
-        
-        
+        </div>       
     )
 }
