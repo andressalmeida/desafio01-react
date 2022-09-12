@@ -2,11 +2,10 @@ import styles from './Task.module.css';
 import Clipboard from '../assets/Clipboard.svg'
 import { PlusCircle } from 'phosphor-react';
 import { Trash } from 'phosphor-react'
-import { useMemo, useState } from 'react';
-import { ChangeEvent, FormEvent, InvalidEvent } from 'react';
+import { useState } from 'react';
+import { ChangeEvent, FormEvent } from 'react';
 
 import {v4 as uuidv4} from 'uuid'
-
 
 interface TaskProps {
     id: string,
@@ -18,8 +17,10 @@ export function Task() {
 
     const [tasks, setTasks] = useState<TaskProps[]>([])
     const [inputNewText, setInputNewText] = useState('')
-    const [taskCount, setTaskCount] = useState(0)
+    const countAllTasks = tasks.length
     const isTaskEmpty = tasks.length === 0
+    const filteredCheckedTasks = tasks.filter(task => task.isChecked === true).length
+    
 
     function handleCreateTask(event: FormEvent) {
         event.preventDefault()
@@ -33,8 +34,6 @@ export function Task() {
 
             setTasks([...tasks, newTask])
             setInputNewText('')
-
-            setTaskCount((state) => {return state + 1})
         } else {
             alert('Este campo é obrigatório')
         }
@@ -55,17 +54,12 @@ export function Task() {
 
         setTasks(checkedTask) 
     }
-
-    const filteredCheckedTasks = useMemo(() => {
-        return tasks.filter(task => task.isChecked === true).length
-    }, [tasks])
     
 
     function handleDeleteTask(id: string) {
         const filteredTasks = tasks.filter(task => task.id !== id)
 
         setTasks(filteredTasks)
-        setTaskCount(filteredTasks.length)
     }
     return (
  
@@ -87,12 +81,12 @@ export function Task() {
             <div className={styles.listTitle}>
                     <div className={styles.countAllTasks}>
                         <strong>Tarefas criadas</strong>
-                        <span>{taskCount}</span>
+                        <span>{countAllTasks}</span>
                     </div>
                     
                     <div className={styles.countCheckTasks}>
                         <strong>Concluídas</strong>
-                        <span>{filteredCheckedTasks}</span>
+                        <span>{filteredCheckedTasks} de {countAllTasks}</span>
                     </div>
             </div>
 
