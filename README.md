@@ -1,4 +1,4 @@
-# **Projeto: ToDo List** ✅
+### **ToDo List** ✅
 
 
 Projeto desenvolvido para o primeiro desafio da trilha de React, no Ignite da Rocketseat.
