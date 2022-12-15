@@ -1,0 +1,149 @@
+.taskContainer {
+    width: 100%;
+    margin-top: -2rem;
+}
+
+.newTaskForm {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.newTaskForm textarea {
+    background: var(--gray-500);
+    border: 1px solid var(--gray-700);
+    color: var(--gray-100);
+    border-radius: 8px;
+    resize: none;
+    width: 40rem;
+    height: 3.25rem;
+    padding: 1rem; 
+}
+
+.newTaskForm button {
+    background: var(--blue-dark);
+    color: var(--gray-100);
+    border: 1px solid var(--gray-700);
+    border-radius: 8px;
+    height: 3.25rem;
+    width: 5.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    font-size: 0.875rem;
+    cursor: pointer
+}
+
+.newTaskForm button:hover {
+    background: var(--blue);
+}
+
+.emptyTasks {
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--gray-400);
+    border-radius: 8px;
+    padding: 4rem 1.5rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.emptyTasksFalse {
+    display: none
+}
+.emptyTasks strong {
+    color: var(--gray-300);
+    font-size: 1rem;
+}
+.emptyTasks p {
+    color: var(--gray-300);
+    font-size: 1rem;
+    margin-top: -0.75rem;
+}
+
+
+/*Task List*/
+
+.listTasks {
+    margin-top: 2rem;
+    margin-bottom: 8rem;
+}
+
+.listTitle {
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+   
+}
+
+.countAllTasks {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25rem;
+}
+
+.countAllTasks strong {
+    color: var(--blue)
+}
+
+.countAllTasks span {
+    background: var(--gray-400);
+    border-radius: 60rem;
+    width: 1.5rem;
+    height: 1.25rem;
+    font-size: 0.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.countCheckTasks {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25rem;
+}
+
+.countCheckTasks strong {
+    color: var(--purple)
+}
+
+
+.countCheckTasks span {
+    color: var(--gray-100);
+    background: var(--gray-400);
+    border-radius: 999rem;
+    padding: 3px 9px;
+    font-size: 0.75rem;
+}
+
+.listTasks ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 16px;
+    height: 4.5rem;
+ 
+    background: #262626;
+
+    border: 1px solid var(--gray-400);
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+    margin-top: 0.75rem;
+}
+
+
+
+.listTasks button {
+    background: none;
+    border: none;
+    color: var(--gray-300);
+    cursor: pointer;
+}
